@@ -1,0 +1,45 @@
+menu "LLM Configuration"
+
+    choice LLM_INFERENCE_TYPE
+        prompt "LLM Inference Type"
+        default LLM_INFERENCE_INT8
+        help
+            Select the inference engine to use (FLOAT32 or INT8 quantized).
+            FLOAT32 models require llm.c, INT8 models require llm8.c.
+
+        config LLM_INFERENCE_FLOAT32
+            bool "FLOAT32 (llm.c)"
+
+        config LLM_INFERENCE_INT8
+            bool "INT8 Quantized (llm8.c)"
+    endchoice
+
+    config LLM_MODEL_PATH_FLOAT32
+        string "Path to FLOAT32 Model"
+        depends on LLM_INFERENCE_FLOAT32
+        default "/spiffs/stories260K.bin"
+        help
+            Path to the fp32 model binary in SPIFFS (e.g. /spiffs/stories260K.bin or /spiffs/stories1M.bin).
+
+    config LLM_TOKENIZER_PATH_FLOAT32
+        string "Path to FLOAT32 Tokenizer"
+        depends on LLM_INFERENCE_FLOAT32
+        default "/spiffs/tok512.bin"
+        help
+            Path to the tokenizer binary in SPIFFS.
+
+    config LLM_MODEL_PATH_INT8
+        string "Path to INT8 Quantized Model"
+        depends on LLM_INFERENCE_INT8
+        default "/spiffs/stories3M-q80.bin"
+        help
+            Path to the q80 model binary in SPIFFS.
+
+    config LLM_TOKENIZER_PATH_INT8
+        string "Path to INT8 Tokenizer"
+        depends on LLM_INFERENCE_INT8
+        default "/spiffs/tok4096.bin"
+        help
+            Path to the tokenizer binary in SPIFFS.
+
+endmenu

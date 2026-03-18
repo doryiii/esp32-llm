@@ -1,0 +1,9 @@
+## IDF Component Manager Manifest File
+dependencies:
+  ## Required IDF version
+  idf:
+    version: '>=4.1.0'
+  espressif/esp-dsp:
+    version: '*'
+    rules:
+      - if: "$CONFIG{LLM_INFERENCE_FLOAT32} == True"
